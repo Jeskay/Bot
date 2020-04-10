@@ -10,7 +10,7 @@ module.exports = {
         //    message.channel.send('You should invite someone to play with.');
         //Match.WhitePlayer = message.author.id;
         //Match.BlackPlayer = message.args;
-        console.log(Match.start('white'));
+        console.log(Match.start(client, 'white'));
         message.channel.send('Table has been created, the match has started.');
         message.channel.send(Match.showMatch());
     }

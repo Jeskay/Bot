@@ -1,8 +1,8 @@
 const Controller = require('./tablecontroller');
 const Checker    = require('./checkers.js');
+const { RichEmbed } = require('discord.js');
 
 class Field{
-    //Endgame = false
     changePlayer(){
         if(this.currentPlayer === 'white')
             this.currentPlayer = 'black';
@@ -10,7 +10,7 @@ class Field{
             this.currentPlayer = 'white';
     }
     showTable(){
-        return Controller.showField(this.draughts);
+        return Controller.showField(this.client, this.draughts);
     }
     _eatDraught(coord, newcoord){
         let draught = this.draughts[coord[0]][coord[1]];
@@ -60,13 +60,15 @@ class Field{
 
         return true;
     }
-    constructor(player){
+    constructor(player, client){
         //filling strings of white draughts
         const x = 8;
         const y = 8;
         //filling field array
         this.draughts = Controller.createfield(x, y);
+        this.client = client;
         this.currentPlayer = player;
+        this.Endgame = false;
     }
 }
 module.exports = Field;

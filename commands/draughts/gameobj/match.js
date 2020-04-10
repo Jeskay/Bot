@@ -34,8 +34,8 @@ module.exports = {
             return "There is a draight which should be eaten.";
         return this.Field.showTable();
     },
-    start(firstPlayer){
-        this.Field = new Field(firstPlayer);
+    start(client, firstPlayer){
+        this.Field = new Field(firstPlayer, client);
         this.GameStatus = 'In process';
         return this.Field.showTable(); 
     }
