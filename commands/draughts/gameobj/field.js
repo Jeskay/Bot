@@ -10,7 +10,7 @@ class Field{
             this.currentPlayer = 'white';
     }
     showTable(){
-        return Controller.showField(this.client, this.draughts);
+        return Controller.showField(this.draughts);
     }
     _eatDraught(coord, newcoord){
         let draught = this.draughts[coord[0]][coord[1]];

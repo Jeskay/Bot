@@ -1,9 +1,10 @@
 var Emojis = {
     whitedraught : ":white_circle:",
-    blackdraught : ":black_circle:",
+    blackdraught : ":red_circle:",
     whitedam     : ":white_large_square:",
-    blackdam     : ":black_large_square:",
-    emptycell    : ":brown_square:",
+    blackdam     : ":red_large_square:",
+    whitecell    : ":brown_square:",
+    blackcell    : ":black_large_square:",
     bordercell   : ":blue_square:",
 
     numbers : [

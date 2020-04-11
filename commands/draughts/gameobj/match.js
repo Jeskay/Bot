@@ -2,7 +2,7 @@ const Field = require('./field.js');
 
 module.exports = {
     Field: null,
-    currentDraught: null,   
+    currentDraught: null,
     WhitePlayer: null,
     BlackPlayer: null,
     GameStatus: null,
@@ -21,7 +21,7 @@ module.exports = {
                 this.currentDraught = newcoord; 
             else this.currentDraught = null;{
                 this.Field.changePlayer();
-                return this.Field.showTable();
+                return "Success";
             }
         }
         if(!this.Field.checkPlayercaneat()){
@@ -32,7 +32,7 @@ module.exports = {
         }
         else 
             return "There is a draight which should be eaten.";
-        return this.Field.showTable();
+        return "Success";
     },
     start(client, firstPlayer){
         this.Field = new Field(firstPlayer, client);

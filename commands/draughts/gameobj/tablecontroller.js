@@ -1,7 +1,7 @@
 const Draught = require('./draught.js');
 const Emojis = require('./emojis.js');
 module.exports = {
-    showField(client, field){
+    showField(field){
         let table = Emojis.bordercell;
         for(var i = 0; i < field[0].length;i++)
             table += `:regional_indicator_${String.fromCharCode(Number(97 + i))}:`;
@@ -11,10 +11,17 @@ module.exports = {
             for(var i = 0; i < element.length; i++){
                 let item = element[i];
                 if(item != null && item != undefined){
-                    if(item._color === 'white') table += item._isDam ? Emojis.whitedam : Emojis.whitedraught;
-                    else table += item._isDam ? Emojis.blackdam : Emojis.blackdraught;
+                    if(item._color === 'white') 
+                        table += item._isDam ? Emojis.whitedam : Emojis.whitedraught;
+                    else
+                        table += item._isDam ? Emojis.blackdam : Emojis.blackdraught;
                 }
-                else table += Emojis.emptycell;
+                else{
+                    if(index % 2 == 0)
+                        table += i % 2 === 0 ? Emojis.whitecell : Emojis.blackcell;
+                    else
+                        table += i % 2 != 0 ? Emojis.whitecell : Emojis.blackcell;
+                }
             }
             table += Emojis.bordercell + '\n';
         });

@@ -1,6 +1,23 @@
 const Draught = require('./draught.js');
 const Finder = require('./finders.js');
-
+const checkDraught = function(array, x, y, draught){
+    if(x < 0 || y < 0) return false;
+    if(x >= array.length || y >= array[x].length) return false;
+    let cell = array[x][y];
+    if(cell === null || cell === undefined) return false;
+    if(cell._color === draught._color) return false;
+    return true;
+};
+const checkCell = function(array, x, y){
+    if(x < 0 || y < 0) 
+        return false;
+    if(x >= array.length || y >= array[x].length) 
+        return false;
+    if(array[x][y] === null)
+        return true
+    else
+        return false;
+};
 module.exports = {
     checkDraughtmovement(field, coord){ 
         const x = coord[0];
@@ -49,14 +66,7 @@ module.exports = {
         const ycoord = coord[1];
         const currentdraught = field[xcoord][ycoord];
         let arr = new Array();
-        const check = function(array, x, y, draught){
-            if(x < 0 || y < 0) return false;
-            if(x >= array.length || y >= array[x].length) return false;
-            const cell = array[x][y];
-            if(cell === null || cell === undefined) return false;
-            if(cell._color === draught._color) return false;
-            return true;
-        };
+        
         if(currentdraught._isDam){
             let endraught = Finder.findDraught(field, xcoord, ycoord, Number(+1), Number(+1));
             if(endraught != null){
@@ -89,16 +99,16 @@ module.exports = {
             }
         else{
 
-            if(check(field, xcoord + 1, ycoord + 1, currentdraught) && !check(field, xcoord + 2, ycoord + 2, currentdraught)){
+            if(checkDraught(field, xcoord + 1, ycoord + 1, currentdraught) && checkCell(field, xcoord + 2, ycoord + 2)){
                  arr.push([[xcoord + 2,Number(ycoord + 2)], [xcoord + 1, ycoord + 1]]);
             }
-            if(check(field, xcoord - 1, ycoord + 1, currentdraught) && !check(field, xcoord - 2, ycoord + 2, currentdraught)){
+            if(checkDraught(field, xcoord - 1, ycoord + 1, currentdraught) && checkCell(field, xcoord - 2, ycoord + 2)){
                  arr.push([[xcoord - 2,Number(ycoord + 2)], [xcoord - 1, ycoord + 1]]);
             }
-            if(check(field, xcoord + 1, ycoord - 1, currentdraught) && !check(field, xcoord + 2, ycoord - 2, currentdraught)){ 
+            if(checkDraught(field, xcoord + 1, ycoord - 1, currentdraught) && checkCell(field, xcoord + 2, ycoord - 2)){ 
                 arr.push([[xcoord + 2,Number(ycoord - 2)], [xcoord + 1, ycoord - 1]]);
             }
-            if(check(field, xcoord - 1, ycoord - 1, currentdraught) && !check(field, xcoord - 2, ycoord - 2, currentdraught)){ 
+            if(checkDraught(field, xcoord - 1, ycoord - 1, currentdraught) && checkCell(field, xcoord - 2, ycoord - 2)){ 
                 arr.push([[xcoord - 2,Number(ycoord - 2)], [xcoord - 1, ycoord - 1]]);
             }
         }
