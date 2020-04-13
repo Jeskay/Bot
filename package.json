@@ -15,8 +15,7 @@
     "tress": "^1.1.4",
     "yarn": "^1.22.0"
   },
-  "devDependencies": {
-  },
+  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

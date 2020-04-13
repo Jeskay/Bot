@@ -1,5 +1,5 @@
-const Controller = require('./tablecontroller');
-const Checker    = require('./checkers.js');
+const Controller = require('./common/tablecontroller');
+const Checker    = require('./common/checkers.js');
 const { RichEmbed } = require('discord.js');
 
 class Field{
