@@ -38,5 +38,11 @@ module.exports = {
         this.Field = new Field(firstPlayer, client);
         this.GameStatus = 'In process';
         return this.Field.showTable(); 
+    },
+    stop(){
+        this.Field = null;
+        this.BlackPlayer = null;
+        this.WhitePlayer = null;
+        this.currentDraught = null;
     }
 }

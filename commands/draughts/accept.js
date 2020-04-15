@@ -1,15 +1,18 @@
 const Match       = require('./gameobj/match.js');
-const {RichEmbed} = require('discord.js');
+const InviteList = require('./embeds/invitelist.js');
 module.exports = {
-    name: "invite",
+    name: "accept",
     category: "games",
     description: "invites another user to ur game",
     usage: "<name>",
     run: async(client, message, args)=>{
-        if(args === null)
-            message.channel.send('You should invite someone to play with.');
-        Match.WhitePlayer = message.author.id;
-        Match.BlackPlayer = message.args;
-        
+        const oponents = InviteList.delete(message.author.id);
+        if(oponents != null){
+            Match.WhitePlayer = oponents.inviter;
+            Match.BlackPlayer = oponents.invited;
+            message.channel.send(Match.start(client, 'white'));
+        }
+        else
+            message.channel.send("You don't have invites from other players(");
     }
 }

@@ -15,7 +15,9 @@ module.exports = {
         }
         message.channel.send(`moving from ${firstcoord} to ${secondcoord} .`);
         message.channel.send(Match.showMatch());
-        if(Match.GameStatus != 'In process')
+        if(Match.GameStatus != 'In process'){
             message.channel.send(Match.GameStatus);
+            Match.stop();
+        }
     }
 }
