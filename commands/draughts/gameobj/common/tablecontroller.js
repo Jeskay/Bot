@@ -1,5 +1,5 @@
 const Draught = require('../draught.js');
-const Emojis = require('../emojis.js');
+const {Emojis} = require('../emojis.js');
 module.exports = {
     showField(field){
         let table = Emojis.bordercell;

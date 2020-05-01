@@ -1,4 +1,4 @@
-var Emojis = {
+module.exports.Emojis = {
     whitedraught : ":white_circle:",
     blackdraught : ":red_circle:",
     whitedam     : ":white_large_square:",
@@ -20,4 +20,3 @@ var Emojis = {
         ":nine:"
     ]
 };
-module.exports = Emojis;

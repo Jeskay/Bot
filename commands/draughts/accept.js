@@ -8,9 +8,7 @@ module.exports = {
     run: async(client, message, args)=>{
         const oponents = InviteList.delete(message.author.id);
         if(oponents != null){
-            Match.WhitePlayer = oponents.inviter;
-            Match.BlackPlayer = oponents.invited;
-            message.channel.send(Match.start(client, 'white'));
+            message.channel.send(Match.add(client, 'white', oponents.invited, oponents.inviter));
         }
         else
             message.channel.send("You don't have invites from other players(");

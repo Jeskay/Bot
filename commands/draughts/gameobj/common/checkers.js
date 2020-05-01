@@ -1,4 +1,4 @@
-const Finder = require('./finders.js');
+const {FindCells, FindDraught} = require('./finders.js');
 const checkDraught = function(array, x, y, draught){
     if(x < 0 || y < 0) return false;
     if(x >= array.length || y >= array[x].length) return false;
@@ -17,8 +17,7 @@ const checkCell = function(array, x, y){
     else
         return false;
 };
-module.exports = {
-    checkDraughtmovement(field, coord){ 
+module.exports.DraughtMovement = function(field, coord){ 
         const x = coord[0];
         const y = coord[1];
         const draught = field[x][y];
@@ -59,38 +58,38 @@ module.exports = {
             }
         }
         return arr;
-    },
-    checkDraughcaneat(field, coord){
+    };
+    module.exports.DraughtCanEat = function(field, coord){
         const xcoord = coord[0];//must return coordinates of the draught which must be eaten
         const ycoord = coord[1];
         const currentdraught = field[xcoord][ycoord];
         let arr = new Array();
         
         if(currentdraught._isDam){
-            let endraught = Finder.findDraught(field, xcoord, ycoord, Number(+1), Number(+1));
+            let endraught = FindDraught(field, xcoord, ycoord, Number(+1), Number(+1));
             if(endraught != null){
-                var cells = Finder.findCells(field, endraught[0], endraught[1], Number(+1), Number(+1));
+                var cells = FindCells(field, endraught[0], endraught[1], Number(+1), Number(+1));
                 if(cells.length != 0) (cells).forEach((element) => {
                     arr.push([element, endraught]);
                 });
             }
-            endraught = Finder.findDraught(field, xcoord, ycoord, Number(+1), Number(-1));
+            endraught = FindDraught(field, xcoord, ycoord, Number(+1), Number(-1));
             if(endraught != null){
-                var cells = Finder.findCells(field, endraught[0], endraught[1], Number(+1), Number(-1));
+                var cells = FindCells(field, endraught[0], endraught[1], Number(+1), Number(-1));
                 if(cells.length != 0) (cells).forEach((element) => {
                     arr.push([element, endraught]);
                 });
             }
-            endraught = Finder.findDraught(field, xcoord, ycoord, Number(-1), Number(-1));
+            endraught = FindDraught(field, xcoord, ycoord, Number(-1), Number(-1));
             if(endraught != null){
-                var cells = Finder.findCells(field, endraught[0], endraught[1], Number(-1), Number(-1));
+                var cells = FindCells(field, endraught[0], endraught[1], Number(-1), Number(-1));
                 if(cells.length != 0) (cells).forEach((element) => {
                     arr.push([element, endraught]);
                 });
             }
-            endraught = Finder.findDraught(field, xcoord, ycoord, Number(-1), Number(+1));
+            endraught = FindDraught(field, xcoord, ycoord, Number(-1), Number(+1));
             if(endraught != null){
-                var cells = Finder.findCells(field, endraught[0], endraught[1], Number(-1), Number(+1));
+                var cells = FindCells(field, endraught[0], endraught[1], Number(-1), Number(+1));
                 if(cells.length != 0) (cells).forEach((element) => {
                     arr.push([element, endraught]);
                 });
@@ -112,8 +111,8 @@ module.exports = {
             }
         }
         return arr;
-    },
-    checkPlayerWin(field, color){
+    };
+    module.exports.PlayerWin = function(field, color){
         for(let j = 0; j < field.length;j++){
             for(let i = 0; i < field[j].length; i++){
                 let draught = field[j][i];
@@ -124,8 +123,8 @@ module.exports = {
             }
         }
         return true;
-    },
-    checkBecomedam(field, coord){
+    };
+    module.exports.Becomedam = function(field, coord){
         const x = coord[0];
         const y = coord[1];
         const draught = field[x][y];
@@ -133,8 +132,8 @@ module.exports = {
         if(draught._color === 'white' && y === 0) return true;
         if(draught._color === 'black' && y === field.length - 1) return true;
         return false;
-    },
-    checkPlayerdraught(field, coord, color){
+    };
+    module.exports.PlayerDraught = function(field, coord, color){
         const x = coord[0];
         const y = coord[1];
         if(field[x][y] === null) 
@@ -142,5 +141,4 @@ module.exports = {
         if(field[x][y]._color != color) 
             return false;
         return true;
-    }
-}
+    };

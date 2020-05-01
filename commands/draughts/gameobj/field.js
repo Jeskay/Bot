@@ -1,5 +1,5 @@
 const Controller = require('./common/tablecontroller');
-const Checker    = require('./common/checkers.js');
+const {PlayerDraught, DraughtCanEat, DraughtMovement, PlayerWin, Becomedam}    = require('./common/checkers.js');
 const { RichEmbed } = require('discord.js');
 
 class Field{
@@ -14,10 +14,10 @@ class Field{
     }
     _eatDraught(coord, newcoord){
         let draught = this.draughts[coord[0]][coord[1]];
-        if(!Checker.checkPlayerdraught(this.draughts, coord, this.currentPlayer)) return false;
+        if(!PlayerDraught(this.draughts, coord, this.currentPlayer)) return false;
         if(draught === null) return false;
         //cheking for the draught
-        const moves = Checker.checkDraughcaneat(this.draughts, coord);
+        const moves = DraughtCanEat(this.draughts, coord);
         if(moves === null) return false;
         const move = moves.find(item => item[0][0] === newcoord[0] && item[0][1] === newcoord[1]);
         if( move === undefined) return false;
@@ -25,7 +25,7 @@ class Field{
         this.draughts[coord[0]][coord[1]] = null;
         this.draughts[move[1][0]][move[1][1]] = null;
         this.draughts[move[0][0]][move[0][1]] = draught;
-        if(Checker.checkPlayerWin(this.draughts, draught._color)) 
+        if(PlayerWin(this.draughts, draught._color)) 
             this.Endgame = true;
         return true;
     }
@@ -34,27 +34,30 @@ class Field{
             for(let i = 0;i < this.draughts[j].length; i++){
                 if(this.draughts[j][i] === null) continue;
                 if(this.draughts[j][i]._color != this.currentPlayer) continue;
-                const move = Checker.checkDraughcaneat(this.draughts, [j, i]);
+                const move = DraughtCanEat(this.draughts, [j, i]);
                 if(move.length > 0)
                     return true;
             }
         return false;
     }
     checkDraughtcaneat(coord){
-       return Checker.checkDraughcaneat(this.draughts, coord);
+       if(DraughtCanEat(this.draughts, coord).length == 0)
+            return false;
+       return true;
+
     }
     _moveDraught(coord, newcoord){
         let draught = this.draughts[coord[0]][coord[1]];
-        if(!Checker.checkPlayerdraught(this.draughts, coord, this.currentPlayer)) return false;
+        if(!PlayerDraught(this.draughts, coord, this.currentPlayer)) return false;
         if(draught === null) return false; 
         //check the move
-        const moves = Checker.checkDraughtmovement(this.draughts, coord);
+        const moves = DraughtMovement(this.draughts, coord);
         if(moves === null) return false;
 
         if(moves.find(item => item[0] === newcoord[0] && item[1] === newcoord[1]) === undefined) return false;
 
         this.draughts[coord[0]][coord[1]] = null;
-        if(Checker.checkBecomedam(this.draughts, newcoord))
+        if(Becomedam(this.draughts, newcoord))
             draught._isDam = true;
         this.draughts[newcoord[0]][newcoord[1]] = draught;
 
